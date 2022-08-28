@@ -25,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\Tvmaze.ShowCast.Core\Tvmaze.ShowCast.Core.csproj" />
+      <ProjectReference Include="..\..\src\Tvmaze.ShowCast.Core\Tvmaze.ShowCast.Core.csproj" />
     </ItemGroup>
 
 </Project>

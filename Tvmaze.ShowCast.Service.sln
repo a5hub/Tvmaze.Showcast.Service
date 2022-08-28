@@ -12,9 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5647B430-07A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D08B1A46-5F77-45F3-A024-6E110AB65104}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tvmaze.ShowCast.Core.Tests", "Tvmaze.ShowCast.Core.Tests\Tvmaze.ShowCast.Core.Tests.csproj", "{B48D0FC4-5766-437F-96FB-BD8DC1F209F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tvmaze.ShowCast.Core.Tests", "tests\Tvmaze.ShowCast.Core.Tests\Tvmaze.ShowCast.Core.Tests.csproj", "{B48D0FC4-5766-437F-96FB-BD8DC1F209F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tvmaze.ShowCast.WebApi.Tests", "Tvmaze.ShowCast.WebApi.Tests\Tvmaze.ShowCast.WebApi.Tests.csproj", "{607B3193-AAAD-494C-BE98-E8D78C4385E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tvmaze.ShowCast.WebApi.Tests", "tests\Tvmaze.ShowCast.WebApi.Tests\Tvmaze.ShowCast.WebApi.Tests.csproj", "{607B3193-AAAD-494C-BE98-E8D78C4385E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
