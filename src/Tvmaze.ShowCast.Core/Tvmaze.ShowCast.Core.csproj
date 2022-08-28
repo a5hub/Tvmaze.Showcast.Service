@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.30.0" />
+      <PackageReference Include="MongoDB.Driver" Version="2.17.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Tvmaze.ShowCast.ApiClient\Tvmaze.ShowCast.ApiClient.csproj" />
+    </ItemGroup>
+
+</Project>
