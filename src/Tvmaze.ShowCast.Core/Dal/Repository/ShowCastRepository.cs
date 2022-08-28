@@ -18,8 +18,9 @@ public class ShowCastRepository : IShowCastRepository
     {
         var item = new ShowCastEntity
         {
-            Id = dalDto.Id.ToString(),
+            Key = dalDto.Id.ToString(),
             PartitionKey = pageNumber.ToString(),
+            Id = dalDto.Id,
             Name = dalDto.Name,
             Cast = dalDto.Cast?.Select(x => new Cast
             {
@@ -37,7 +38,7 @@ public class ShowCastRepository : IShowCastRepository
         var queryText = $"SELECT * FROM c WHERE c.partitionKey = '{pageNumber}'";
         var data = await _dbContext.QueryAsync<ShowCastEntity>(queryText, token);
 
-        return data.Select(x => new ShowCastDalDto(Int32.Parse(x.Id), x.Name, 
+        return data.Select(x => new ShowCastDalDto(x.Id, x.Name, 
              x.Cast?.Select(y => new CastDalDto(y.Id, y.Name, y.Birthday?.ToDateOnly())))
         );
     }
