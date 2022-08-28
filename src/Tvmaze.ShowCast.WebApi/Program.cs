@@ -7,7 +7,9 @@ using Tvmaze.ShowCast.Core.Dal.Repository;
 using Tvmaze.ShowCast.Core.Extensions;
 using Tvmaze.ShowCast.Core.Options;
 using Tvmaze.ShowCast.WebApi.ApiServices;
+using Tvmaze.ShowCast.WebApi.Cache;
 using Tvmaze.ShowCast.WebApi.Converters;
+using Tvmaze.ShowCast.WebApi.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<TvmazeClientOptions>(builder.Configuration.GetSection(TvmazeClientOptions.Key));
 builder.Services.Configure<ApiPolicyOptions>(builder.Configuration.GetSection(ApiPolicyOptions.Key));
 builder.Services.Configure<ParallelismOptions>(builder.Configuration.GetSection(ParallelismOptions.Key));
+builder.Services.Configure<CacheOptions>(builder.Configuration.GetSection(CacheOptions.Key));
 
 // Api clients
 builder.Services.AddTransient<IApiPolicies, ApiPolicies>();
@@ -34,6 +37,7 @@ builder.Services.AddTvmazeApiServices();
 builder.Services.AddTransient<IShowCastApiService, ShowCastApiService>();
 builder.Services.AddTransient<IShowCastService, ShowCastService>();
 builder.Services.AddTransient<IShowCastRepository, ShowCastRepository>();
+builder.Services.AddTransient<ICache, Cache>();
         
 // Database
 builder.Services.AddCosmosDbService(builder.Configuration.GetSection(CosmosDbOptions.Key).Bind);
@@ -44,6 +48,12 @@ var logger = new LoggerConfiguration()
     .CreateLogger();
 builder.Logging.AddSerilog(logger);
 
+// Cache
+builder.Services.AddStackExchangeRedisCache(option =>
+{
+    option.Configuration = builder.Configuration.GetSection(CacheOptions.Key).GetSection("ConnectionString").Value;
+    option.InstanceName = "master";
+});
 
 var app = builder.Build();
 

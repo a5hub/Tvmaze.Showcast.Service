@@ -3,18 +3,22 @@ using Moq;
 using Tvmaze.ShowCast.Core.Bll.Models;
 using Tvmaze.ShowCast.Core.Bll.Services;
 using Tvmaze.ShowCast.WebApi.ApiServices;
+using Tvmaze.ShowCast.WebApi.Cache;
+using Tvmaze.ShowCast.WebApi.Responses;
 
 namespace Tvmaze.ShowCast.WebApi.Tests.ApiServices;
 
 public class ShowCastApiServiceTests
 {
     private readonly Mock<IShowCastService> _showCastService;
+    private readonly Mock<ICache> _cache;
     private readonly ShowCastApiService _sut;
 
     public ShowCastApiServiceTests()
     {
         _showCastService = new Mock<IShowCastService>();
-        _sut = new ShowCastApiService(_showCastService.Object);
+        _cache = new Mock<ICache>();
+        _sut = new ShowCastApiService(_showCastService.Object, _cache.Object);
     }
     
     [Fact]
@@ -33,8 +37,11 @@ public class ShowCastApiServiceTests
             new (2, "show 2", new List<CastModel> { castYoungest, castYounger, castOld }),
             new (3, "show 3", new List<CastModel> { castOld, castYoungest, castYounger })
         };
-            
+
+        IEnumerable<ShowCastResponse>? cacheResponse = null;
         // Expectations
+        _cache.Setup(x => x.GetAsync<IEnumerable<ShowCastResponse>>(page.ToString(), CancellationToken.None))
+            .ReturnsAsync(cacheResponse);
         _showCastService.Setup(x => x.GetPageAsync(page, CancellationToken.None)).ReturnsAsync(showCast);
         
         // Act
