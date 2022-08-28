@@ -4,7 +4,13 @@
 ## Explanation 
 There are two main services which are responsible for application logic:
 1. Worker service responsible for scraping of web API - automatically start scrapping from last synced page according to schedule;
-2. WebApi service responsible for data access to scraped data.
+2. WebApi service responsible for data access to scraped data;
+3. Tvmaze.WebApi responsible for access to external api;
+4. Core contains all key business logic and shared between Worker and WebApi project.
+
+Core porject agreements:
+Bll - business logic layer.
+Dal - data access layer.
 
 ## Initial task
 ### TvMaze Scraper
