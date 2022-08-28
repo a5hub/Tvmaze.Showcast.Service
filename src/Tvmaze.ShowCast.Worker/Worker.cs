@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using Tvmaze.ShowCast.Core.Bll.Services;
 using Tvmaze.ShowCast.Worker.Options;
 
@@ -13,11 +14,11 @@ public class Worker : BackgroundService
 
     public Worker(ILogger<Worker> logger, 
         IShowCastService showCastService, 
-        ScheduleOptions scheduleOptions)
+        IOptions<ScheduleOptions> scheduleOptions)
     {
         _logger = logger;
         _showCastService = showCastService;
-        _scheduleOptions = scheduleOptions;
+        _scheduleOptions = scheduleOptions.Value;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
