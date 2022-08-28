@@ -50,7 +50,7 @@ public class ShowCastService : IShowCastService
     private async Task<int> GetLastSyncedPageNumAsync(CancellationToken token)
     {
         var lastRecordId = await _showCastRepository.GetLastRecordIdAsync(token);
-        var lastSyncedPage =lastRecordId / TvmazePageSizeConst;
+        var lastSyncedPage = lastRecordId / TvmazePageSizeConst;
         return lastSyncedPage;
     }
 
@@ -64,6 +64,7 @@ public class ShowCastService : IShowCastService
         while (true)
         {
             var shows = await _tvmazeWebapi.GetShowsAsync(pageNumber, token);
+            if (!shows.Any()) break;
             
             await Parallel.ForEachAsync(shows,
                 new ParallelOptions { MaxDegreeOfParallelism = _parallelismOptions.TvmazeApiMaxDegreeOfParallelism },
