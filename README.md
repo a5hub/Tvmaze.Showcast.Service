@@ -2,8 +2,8 @@
 # tvmaze-showcast-service
 
 ## Explanation 
-There are tow main service which are responsible for application logic:
-1. Worker service responsible for scraping of web API - automatically start scrapping according to schedule from last synced page;
+There are two main services which are responsible for application logic:
+1. Worker service responsible for scraping of web API - automatically start scrapping from last synced page according to schedule;
 2. WebApi service responsible for data access to scraped data.
 
 ## Initial task
