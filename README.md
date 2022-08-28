@@ -1,5 +1,5 @@
 # RTL
-# tvmaze-showcast-service
+# Tvmaze.Showcast.Service
 
 ## Explanation 
 There are two main services which are responsible for application logic:
