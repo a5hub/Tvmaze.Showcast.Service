@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Refit;
 using Tvmaze.ShowCast.ApiClient.Clients;
+using Tvmaze.ShowCast.ApiClient.Responses;
 using Tvmaze.ShowCast.Core.Bll.Models;
 using Tvmaze.ShowCast.Core.Dal.Dtos;
 using Tvmaze.ShowCast.Core.Dal.Repository;
@@ -64,15 +66,22 @@ public class ShowCastService : IShowCastService
         while (true)
         {
             var shows = await _tvmazeWebapi.GetShowsAsync(pageNumber, token);
-            if (!shows.Any()) break;
             
             await Parallel.ForEachAsync(shows,
                 new ParallelOptions { MaxDegreeOfParallelism = _parallelismOptions.TvmazeApiMaxDegreeOfParallelism },
                 async (show, _) =>
                 {
-                    var cast = await _tvmazeWebapi.GetCastAsync(show.Id, token);
+                    IEnumerable<GetCastResponse> cast = null;
+                    try
+                    {
+                        cast = await _tvmazeWebapi.GetCastAsync(show.Id, token);
+                    }
+                    catch (ApiException e)
+                    {
+                        _logger.LogError(e, "Unexpected api exception");
+                    }
                     
-                    var showCast = new ShowCastDalDto(show.Id, show.Name, cast.Select(x => 
+                    var showCast = new ShowCastDalDto(show.Id, show.Name, cast?.Select(x => 
                         new CastDalDto(x.Persons.Id, x.Persons.Name, x.Persons.Birthday?.ToDateOnly())));
                 
                     await _showCastRepository.UpsertItemAsync(showCast, pageNumber, token);
