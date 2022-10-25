@@ -1,4 +1,3 @@
-# RTL
 # Tvmaze.Showcast.Service
 
 ## Explanation 
